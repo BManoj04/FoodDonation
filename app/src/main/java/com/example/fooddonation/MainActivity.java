@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(getDrawable(R.drawable.dialogbox));
         dialog.setCancelable(false);
 
+
         rootDatabseref = FirebaseDatabase.getInstance().getReference().child("donationNumberList");
         rootDatabseref2 = FirebaseDatabase.getInstance().getReference().child("dno");
 
@@ -98,6 +100,12 @@ public class MainActivity extends AppCompatActivity {
                 String address = addEditText.getText().toString();
                 EditText phEditText = dialog.findViewById(R.id.editTextText6);
                 String phno = phEditText.getText().toString();
+
+                nameEditText.setText("");
+                foodEditText.setText("");
+                qEditText.setText("");
+                addEditText.setText("");
+                nameEditText.setText("");
 
                 HashMap map = new HashMap<>();
                 map.put("name",name);
