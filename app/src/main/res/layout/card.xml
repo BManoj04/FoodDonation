@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -30,7 +30,7 @@
                     android:layout_marginEnd="155dp"
                     android:text="Food"
                     android:textFontWeight="1000"
-                    android:textSize="30dp"/>
+                    android:textSize="30dp" />
 
                 <Button
                     android:id="@+id/button5"
@@ -48,6 +48,13 @@
                     android:layout_alignParentBottom="false"
                     android:layout_marginTop="5dp"
                     android:text="Quantity"/>
+
+                <TextView
+                    android:id="@+id/metadata"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:visibility="invisible" />
 
             </RelativeLayout>
 

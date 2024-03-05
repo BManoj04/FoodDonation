@@ -128,8 +128,11 @@ public class MainActivity extends AppCompatActivity {
                 map.put("address",address);
                 map.put("phno",phno);
                 map.put("city",city);
+                map.put("id",++num);
+                map.put("lat","");
+                map.put("lon","");
 
-                rootDatabseref2.setValue(++num);
+                rootDatabseref2.setValue(num);
 
                 rootDatabseref.child(String.valueOf(num)).setValue(map).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
