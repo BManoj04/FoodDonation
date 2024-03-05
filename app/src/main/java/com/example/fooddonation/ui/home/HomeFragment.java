@@ -1,42 +1,25 @@
 package com.example.fooddonation.ui.home;
 
-import static androidx.appcompat.content.res.AppCompatResources.getDrawable;
 
-import android.app.Dialog;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.example.fooddonation.MainActivity;
 import com.example.fooddonation.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
-
 public class HomeFragment extends Fragment {
-
-    private Button btn;
     private LinearLayout linear;
     private DatabaseReference rootDatabseref;
 
@@ -51,11 +34,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    View view2 = getLayoutInflater().inflate(R.layout.card,null);
-                    TextView r = view2.findViewById(R.id.textView8);
-
-                    if(((RelativeLayout) r.getParent()).getChildCount() > 0)
-                        ((RelativeLayout) r.getParent()).removeAllViews();
+                    linear.removeAllViews();
                     if(snapshot.getValue().getClass().getSimpleName().equals("ArrayList")){
                         ArrayList listOfValues = (ArrayList) snapshot.getValue();
                         for (Object x:listOfValues) {
@@ -63,7 +42,11 @@ public class HomeFragment extends Fragment {
                             //addCard(String.valueOf(x));
                             //name
                             if(!String.valueOf(x).equals("null")){
-                                addCard(String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 3) + 1, IndexOfOccurence(String.valueOf(x), ",", 3)));
+                                String foodSubString = String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 6) + 1, IndexOfOccurence(String.valueOf(x), "}", 1));
+                                String quantitySubString = String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 2) + 1, IndexOfOccurence(String.valueOf(x), ",", 2));
+                                String city = String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 3) + 1, IndexOfOccurence(String.valueOf(x), ",", 3));
+                                String shortMsg = quantitySubString + " - " + city;
+                                addCard(foodSubString,shortMsg);
                             }
 
                         }
@@ -76,12 +59,13 @@ public class HomeFragment extends Fragment {
                         for (Object x:listOfValues) {
 
                             if(!String.valueOf(x).equals("null")) {
-                                //addCard(String.valueOf(x));
-                                addCard(String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 3) + 1, IndexOfOccurence(String.valueOf(x), ",", 3)));
+                                String foodSubString = String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 6) + 1, IndexOfOccurence(String.valueOf(x), "}", 1));
+                                String quantitySubString = String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 2) + 1, IndexOfOccurence(String.valueOf(x), ",", 2));
+                                String city = String.valueOf(x).substring(IndexOfOccurence(String.valueOf(x), "=", 3) + 1, IndexOfOccurence(String.valueOf(x), ",", 3));
+                                String shortMsg = quantitySubString + " - " + city;
+                                addCard(foodSubString,shortMsg);
                             }
                         }
-                    }else {
-                        Log.d("error", (String) snapshot.getValue().getClass().getSimpleName());
                     }
                     Log.d("d", (String) snapshot.getValue().getClass().getSimpleName());
                 }
@@ -93,10 +77,12 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
-    private void addCard(String val){
+    private void addCard(String food,String quantity){
         View view = getLayoutInflater().inflate(R.layout.card,null);
-        TextView t = view.findViewById(R.id.textView8);
-        t.setText(val);
+        TextView foodtext = view.findViewById(R.id.textView8);
+        TextView quantitytext = view.findViewById(R.id.textView11);
+        foodtext.setText(food);
+        quantitytext.setText(quantity);
         linear.addView(view);
     }
     private int IndexOfOccurence(String s, String match, int occurence)
@@ -111,5 +97,4 @@ public class HomeFragment extends Fragment {
         }
         return -1;
     }
-
 }
