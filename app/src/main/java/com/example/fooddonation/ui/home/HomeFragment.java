@@ -13,6 +13,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
+import com.example.fooddonation.MainActivity2;
 import com.example.fooddonation.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -89,8 +91,6 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
-
         });
 
         return root;
@@ -112,7 +112,7 @@ public class HomeFragment extends Fragment {
                 String food = foodtxt.getText().toString();
                 TextView shorttxt = r.findViewById(R.id.textView11);
                 String quantity = shorttxt.getText().toString().substring(0,IndexOfOccurence(shorttxt.getText().toString(),"-",1));
-                String city = shorttxt.getText().toString().substring(IndexOfOccurence(shorttxt.getText().toString(),"-",1),shorttxt.getText().toString().length()-1);
+                String city = shorttxt.getText().toString().substring(IndexOfOccurence(shorttxt.getText().toString(),"-",1)+1,shorttxt.getText().toString().length());
                 String id = metadata.substring(0,IndexOfOccurence(metadata,";",1));
                 String address = metadata.substring(IndexOfOccurence(metadata,";",1)+1,IndexOfOccurence(metadata,";",2));
                 String name = metadata.substring(IndexOfOccurence(metadata,";",2)+1,IndexOfOccurence(metadata,";",3));
@@ -120,7 +120,7 @@ public class HomeFragment extends Fragment {
                 String lat = metadata.substring(IndexOfOccurence(metadata,";",4)+1,IndexOfOccurence(metadata,";",5));
                 String phno = metadata.substring(IndexOfOccurence(metadata,";",5)+1,metadata.length());
 
-                Intent intent = new Intent();
+                Intent intent = new Intent(getContext(), MainActivity2.class);
                 intent.putExtra("name",name);
                 intent.putExtra("id",id);
                 intent.putExtra("address",address);
@@ -130,8 +130,10 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("food",food);
                 intent.putExtra("quantity",quantity);
                 intent.putExtra("city",city);
-
                 startActivity(intent);
+
+
+
             }
         });
         linear.addView(view);
