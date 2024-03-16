@@ -5,17 +5,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.fooddonation.ui.home.HomeFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -27,7 +24,6 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fooddonation.databinding.ActivityMainBinding;
-import com.google.firebase.Firebase;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -100,9 +96,9 @@ public class MainActivity extends AppCompatActivity {
         btnpost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText nameEditText = dialog.findViewById(R.id.editTextText);
+                EditText nameEditText = dialog.findViewById(R.id.receivername);
                 String name = nameEditText.getText().toString();
-                EditText foodEditText = dialog.findViewById(R.id.editTextText2);
+                EditText foodEditText = dialog.findViewById(R.id.mailid);
                 String food = foodEditText.getText().toString();
                 EditText qEditText = dialog.findViewById(R.id.editTextText3);
                 String quantity = qEditText.getText().toString();
