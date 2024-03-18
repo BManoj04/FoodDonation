@@ -38,8 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     Dialog dialog;
     private DatabaseReference rootDatabseref;
-    private DatabaseReference rootDatabseref2;
+    private DatabaseReference rootDatabseref2,rootDatabseref3;
     int num;
+    long totalNumberOfFood;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
         rootDatabseref = FirebaseDatabase.getInstance().getReference().child("donationNumberList");
         rootDatabseref2 = FirebaseDatabase.getInstance().getReference().child("dno");
-
+        rootDatabseref3 = FirebaseDatabase.getInstance().getReference();
         rootDatabseref2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -69,12 +70,23 @@ public class MainActivity extends AppCompatActivity {
                     num = Integer.parseInt(snapshot.getValue().toString());
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
+        rootDatabseref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    totalNumberOfFood = snapshot.getChildrenCount() -1 ;
+                    rootDatabseref3.child("totalNumberOfFood").setValue(++totalNumberOfFood);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

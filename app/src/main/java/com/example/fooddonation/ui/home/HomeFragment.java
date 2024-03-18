@@ -131,9 +131,6 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("quantity",quantity);
                 intent.putExtra("city",city);
                 startActivity(intent);
-
-
-
             }
         });
         linear.addView(view);

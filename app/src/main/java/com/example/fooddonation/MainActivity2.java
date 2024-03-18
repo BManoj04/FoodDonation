@@ -70,10 +70,6 @@ public class MainActivity2 extends AppCompatActivity {
                 finish();
             }
         });
-
-
-
-
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
