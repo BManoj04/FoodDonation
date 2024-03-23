@@ -8,7 +8,7 @@
     android:previewImage="@drawable/example_appwidget_preview"
     android:previewLayout="@layout/food_donation_count"
     android:resizeMode="horizontal|vertical"
-    android:targetCellWidth="4"
+    android:targetCellWidth="2"
     android:targetCellHeight="2"
     android:updatePeriodMillis="10"
     android:widgetCategory="home_screen|keyguard" />
