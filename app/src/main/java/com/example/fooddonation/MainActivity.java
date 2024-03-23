@@ -1,6 +1,14 @@
 package com.example.fooddonation;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -16,6 +24,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,8 +41,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -41,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference rootDatabseref2,rootDatabseref3;
     int num;
     long totalNumberOfFood;
+    LocationManager locationManager;
+    double lat = 0,lon = 0;
+    String address = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +66,21 @@ public class MainActivity extends AppCompatActivity {
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{
+                    android.Manifest.permission.ACCESS_FINE_LOCATION
+            },100);
+        }
+        if(ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(MainActivity.this,new String[]{
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            },100);
+        }
+        getLocation();
 
         setSupportActionBar(binding.appBarMain.toolbar);
         dialog = new Dialog(MainActivity.this);
@@ -93,7 +123,10 @@ public class MainActivity extends AppCompatActivity {
                 //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         //.setAction("Action", null).show();
 
+                EditText addEditText = dialog.findViewById(R.id.address);
+                addEditText.setText(address);
                 dialog.show();
+
             }
         });
         Button btnpost = dialog.findViewById(R.id.button3);
@@ -112,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
                 String name = nameEditText.getText().toString();
                 EditText foodEditText = dialog.findViewById(R.id.mailid);
                 String food = foodEditText.getText().toString();
-                EditText qEditText = dialog.findViewById(R.id.editTextText3);
+                EditText qEditText = dialog.findViewById(R.id.quantity);
                 String quantity = qEditText.getText().toString();
-                EditText addEditText = dialog.findViewById(R.id.editTextText5);
+                EditText addEditText = dialog.findViewById(R.id.address);
                 String address = addEditText.getText().toString();
-                EditText phEditText = dialog.findViewById(R.id.editTextText6);
+                EditText phEditText = dialog.findViewById(R.id.phoneNumber);
                 String phno = phEditText.getText().toString();
                 Spinner spinner = dialog.findViewById(R.id.spinner1);
                 String city = spinner.getSelectedItem().toString();
@@ -137,8 +170,8 @@ public class MainActivity extends AppCompatActivity {
                 map.put("phno",phno);
                 map.put("city",city);
                 map.put("id",++num);
-                map.put("lat","");
-                map.put("lon","");
+                map.put("lat",lat);
+                map.put("lon",lon);
 
                 rootDatabseref2.setValue(num);
 
@@ -177,6 +210,16 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
+    @SuppressLint("MissingPermission")
+    private void getLocation() {
+        try {
+            locationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,5000,1, MainActivity.this);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -189,5 +232,34 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+        lat = location.getLatitude();
+        lon = location.getLongitude();
+        try {
+            Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(),location.getLongitude(),1);
+            address = addresses.get(0).getAddressLine(0).replace(",","-");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        Toast.makeText(MainActivity.this,"Location Collected Successfully",Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        LocationListener.super.onStatusChanged(provider, status, extras);
+    }
+
+    @Override
+    public void onProviderEnabled(@NonNull String provider) {
+        LocationListener.super.onProviderEnabled(provider);
+    }
+
+    @Override
+    public void onProviderDisabled(@NonNull String provider) {
+        LocationListener.super.onProviderDisabled(provider);
     }
 }

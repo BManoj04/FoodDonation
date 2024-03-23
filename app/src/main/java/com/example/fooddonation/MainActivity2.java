@@ -1,5 +1,6 @@
 package com.example.fooddonation;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
@@ -12,15 +13,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity implements OnMapReadyCallback {
 
     private DatabaseReference rootDatabseref;
     String mailid;
     String receivername;
+    private GoogleMap mymap;
+    double latitude=0,longitude=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +60,13 @@ public class MainActivity2 extends AppCompatActivity {
         String name = intent.getStringExtra("name");
         String id = intent.getStringExtra("id");
         String address = intent.getStringExtra("address");
-        String lon = intent.getStringExtra("lon");
-        String lat = intent.getStringExtra("lat");
+        longitude = Double.parseDouble(intent.getStringExtra("lon"));
+        latitude = Double.parseDouble(intent.getStringExtra("lat"));
         String phno = intent.getStringExtra("phno");
         String food = intent.getStringExtra("food");
         String quantity = intent.getStringExtra("quantity");
         String city = intent.getStringExtra("city");
+
 
         nameText.setText(name);
         foodText.setText(food);
@@ -63,6 +74,9 @@ public class MainActivity2 extends AppCompatActivity {
         phnoText.setText(phno);
         addText.setText(address);
         cityText.setText(city);
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,5 +136,13 @@ public class MainActivity2 extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mymap = googleMap;
+        LatLng obj = new LatLng(latitude,longitude);
+        mymap.addMarker(new MarkerOptions().position(obj).title("Food Location"));
+        mymap.moveCamera(CameraUpdateFactory.newLatLng(obj));
     }
 }
