@@ -31,6 +31,7 @@ public class MainActivity2 extends AppCompatActivity implements OnMapReadyCallba
     String receivername;
     private GoogleMap mymap;
     double latitude=0,longitude=0;
+    String food = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class MainActivity2 extends AppCompatActivity implements OnMapReadyCallba
         longitude = Double.parseDouble(intent.getStringExtra("lon"));
         latitude = Double.parseDouble(intent.getStringExtra("lat"));
         String phno = intent.getStringExtra("phno");
-        String food = intent.getStringExtra("food");
+        food = intent.getStringExtra("food");
         String quantity = intent.getStringExtra("quantity");
         String city = intent.getStringExtra("city");
 
@@ -137,12 +138,13 @@ public class MainActivity2 extends AppCompatActivity implements OnMapReadyCallba
             }
         });
     }
-
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mymap = googleMap;
         LatLng obj = new LatLng(latitude,longitude);
-        mymap.addMarker(new MarkerOptions().position(obj).title("Food Location"));
+        mymap.addMarker(new MarkerOptions().position(obj).title(food));
         mymap.moveCamera(CameraUpdateFactory.newLatLng(obj));
+        mymap.animateCamera( CameraUpdateFactory.zoomTo(15.0f));
+        mymap.setTrafficEnabled(true);
     }
 }

@@ -5,6 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.slideshow.SlideshowFragment">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/aboutUs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp">
+            </TextView>
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
