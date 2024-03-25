@@ -11,7 +11,10 @@
     <string name="menu_gallery">Info</string>
     <string name="menu_slideshow">About Us</string>
     <string name="appwidget_text">Donate Love</string>
-    <string name="add_widget">Add widget</string>
+    <string name="appwidget_text2">Donate Love</string>
+    <string name="add_widget">Add</string>
     <string name="app_widget_description">"Stay informed and make a difference: Track available food donations with our widget at your fingertips."</string>
+    <string name="app_widget_description2">"Stay informed and make a difference: Track available food donations with our widget at your fingertips."</string>
     <string name="mapApi">AIzaSyDa--67ZamwTXOBXiGk-WwoqFRYHXFz1qA</string>
+    <string name="configure">Choose Your City</string>
 </resources>
