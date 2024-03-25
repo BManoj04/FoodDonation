@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -24,15 +25,22 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment  implements SearchView.OnQueryTextListener{
     private LinearLayout linear;
     private DatabaseReference rootDatabseref;
     private Button viewbtn;
+
+    SearchView editsearch;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+
+        editsearch = (SearchView) root.findViewById(R.id.search);
+        editsearch.setOnQueryTextListener((SearchView.OnQueryTextListener) this);
+
+
 
         linear = root.findViewById(R.id.linear);
         rootDatabseref = FirebaseDatabase.getInstance().getReference().child("donationNumberList");
@@ -94,6 +102,31 @@ public class HomeFragment extends Fragment {
         });
 
         return root;
+    }
+    public boolean onQueryTextSubmit(String query) {
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        String text = newText;
+
+//        View view = getLayoutInflater().inflate(R.layout.fragment_home,null);
+//        View parent = view.findViewById(R.id.linear);
+//        for (int i = 0; i < parent.getChildCount(); i++) {
+//            final View child = parent.getChildAt(i);
+//            if (child instanceof ViewGroup) {
+//                recursiveLoopChildren((ViewGroup) child);
+//                // DO SOMETHING WITH VIEWGROUP, AFTER CHILDREN HAS BEEN LOOPED
+//            } else {
+//                if (child != null) {
+//                    // DO SOMETHING WITH VIEW
+//                }
+//            }
+//        }
+
+        return false;
     }
     private void addCard(String food,String quantity,String metadata){
         View view = getLayoutInflater().inflate(R.layout.card,null);

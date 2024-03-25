@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     LocationManager locationManager;
     double lat = 0,lon = 0;
     String address = "";
+    Boolean locationBollean = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,7 +246,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }catch (Exception e){
             e.printStackTrace();
         }
-        Toast.makeText(MainActivity.this,"Location Collected Successfully",Toast.LENGTH_SHORT).show();
+        if(locationBollean) {
+            Toast.makeText(MainActivity.this, "Location Detected", Toast.LENGTH_SHORT).show();
+        }
+        locationBollean = false;
     }
 
     @Override
