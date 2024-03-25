@@ -77,7 +77,7 @@ public class foodDonationCount2 extends AppWidgetProvider {
                     for (int id : appWidgetIds) {
                         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.food_donation_count2);
                         Log.d("ssssssssssssssssss", String.valueOf(count[0]));
-                        String msg = city + " : " + count[0];
+                        String msg = widgetText + " : " + count[0];
                         views.setTextViewText(R.id.appwidget_text2,msg);
                         appWidgetManager.updateAppWidget(id, views);
                     }
@@ -153,7 +153,7 @@ public class foodDonationCount2 extends AppWidgetProvider {
                     for (int id : appWidgetIds) {
                         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.food_donation_count2);
                         Log.d("ssssssssssssssssss", String.valueOf(count[0]));
-                        String msg = city + " : " + count[0];
+                        String msg = widgetText + " : " + count[0];
                         views.setTextViewText(R.id.appwidget_text2,msg);
                         appWidgetManager.updateAppWidget(id, views);
                     }
