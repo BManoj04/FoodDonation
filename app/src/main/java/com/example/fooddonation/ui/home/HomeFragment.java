@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-public class HomeFragment extends Fragment  implements SearchView.OnQueryTextListener{
+public class HomeFragment extends Fragment{
     private LinearLayout linear;
     private DatabaseReference rootDatabseref;
     private Button viewbtn;
@@ -36,11 +36,6 @@ public class HomeFragment extends Fragment  implements SearchView.OnQueryTextLis
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-        editsearch = (SearchView) root.findViewById(R.id.search);
-        editsearch.setOnQueryTextListener((SearchView.OnQueryTextListener) this);
-
-
 
         linear = root.findViewById(R.id.linear);
         rootDatabseref = FirebaseDatabase.getInstance().getReference().child("donationNumberList");
@@ -108,26 +103,6 @@ public class HomeFragment extends Fragment  implements SearchView.OnQueryTextLis
         return false;
     }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        String text = newText;
-
-//        View view = getLayoutInflater().inflate(R.layout.fragment_home,null);
-//        View parent = view.findViewById(R.id.linear);
-//        for (int i = 0; i < parent.getChildCount(); i++) {
-//            final View child = parent.getChildAt(i);
-//            if (child instanceof ViewGroup) {
-//                recursiveLoopChildren((ViewGroup) child);
-//                // DO SOMETHING WITH VIEWGROUP, AFTER CHILDREN HAS BEEN LOOPED
-//            } else {
-//                if (child != null) {
-//                    // DO SOMETHING WITH VIEW
-//                }
-//            }
-//        }
-
-        return false;
-    }
     private void addCard(String food,String quantity,String metadata){
         View view = getLayoutInflater().inflate(R.layout.card,null);
         viewbtn = view.findViewById(R.id.button5);

@@ -131,13 +131,23 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/textView15"
         app:layout_constraintStart_toStartOf="@+id/textView20" />
 
-    <TextView
-        android:id="@+id/textView22"
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
-        app:layout_constraintStart_toStartOf="@+id/textView21" />
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toTopOf="@+id/textView16">
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            android:textSize="14sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
+            app:layout_constraintStart_toStartOf="@+id/textView21" />
+    </ScrollView>
 
     <TextView
         android:id="@+id/textView23"
@@ -145,7 +155,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView17"
-        app:layout_constraintStart_toStartOf="@+id/textView22" />
+        app:layout_constraintStart_toStartOf="@+id/textView21" />
 
     <fragment
         android:id="@+id/map"

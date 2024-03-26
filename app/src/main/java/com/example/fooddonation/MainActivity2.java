@@ -68,12 +68,14 @@ public class MainActivity2 extends AppCompatActivity implements OnMapReadyCallba
         String quantity = intent.getStringExtra("quantity");
         String city = intent.getStringExtra("city");
 
+        StringBuffer a = new StringBuffer(address);
+        String b = String.valueOf(a.insert(40, "\n"));
 
         nameText.setText(name);
         foodText.setText(food);
         qText.setText(quantity);
         phnoText.setText(phno);
-        addText.setText(address);
+        addText.setText(b);
         cityText.setText(city);
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
